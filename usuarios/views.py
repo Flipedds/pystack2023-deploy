@@ -3,6 +3,8 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib import messages, auth
 from django.contrib.messages import constants
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 # Create your views here.
 
 def cadastro(request):
@@ -47,3 +49,10 @@ def login(request):
         auth.login(request, user)
 
         return redirect('/eventos/novo_evento/')
+    
+@login_required
+def logout_view(request):
+    # Faz o logout do usuário
+    logout(request)
+    # Redireciona para a página de login ou qualquer outra página desejada
+    return redirect(reverse('login'))
